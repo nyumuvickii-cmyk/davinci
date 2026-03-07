@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVINCI - Designer & Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-section: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --accent: #ffffff;
+            --border: #333333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            line-height: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1920&q=80') center/cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 700;
+            line-height: 0.85;
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-width: 400px;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-dark);
+        }
+
+        /* Decorative Arrow */
+        .arrow-down {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 80px;
+            background: var(--text-primary);
+        }
+
+        .arrow-down::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid var(--text-primary);
+        }
+
+        .starburst {
+            position: absolute;
+            top: -40px;
+            left: 10%;
+            width: 60px;
+            height: 60px;
+            background: var(--text-primary);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* About Section */
+        .about {
+            padding: 8rem 4rem;
+            background: var(--bg-section);
+            position: relative;
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 2;
+            max-width: 500px;
+        }
+
+        .about-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sculpture {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 150px 150px 0 0;
+            position: relative;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .sculpture::before {
+            content: 'I AM NOT THIS ONE';
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--text-secondary);
+            transform: rotate(-5deg);
+        }
+
+        /* Selected Cases Section */
+        .cases {
+            padding: 6rem 4rem;
+            background: var(--bg-dark);
+        }
+
+        .cases-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .cases-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .star-small {
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .cases-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .case-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .case-item:hover {
+            transform: translateX(20px);
+        }
+
+        .case-item:nth-child(even) {
+            direction: rtl;
+        }
+
+        .case-item:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .case-item:nth-child(even):hover {
+            transform: translateX(-20px);
+        }
+
+        .case-image {
+            width: 100%;
+            height: 300px;
+            background: #222;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.3s, transform 0.3s;
+        }
+
+        .case-item:hover .case-image img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .case-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+        }
+
+        .case-category {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+
+        .cases-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+        }
+
+        .cases-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .cases-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .cases-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Awards Section */
+        .awards {
+            padding: 6rem 4rem;
+            background: var(--bg-section);
+        }
+
+        .awards-header {
+            margin-bottom: 4rem;
+        }
+
+        .awards-header h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            max-width: 300px;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .award-row {
+            display: contents;
+        }
+
+        .award-row > div {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .award-title {
+            font-weight: 500;
+        }
+
+        .award-platform {
+            color: var(--text-secondary);
+        }
+
+        .award-project {
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        .awards-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .view-more {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Press Section */
+        .press {
+            padding: 4rem;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1920&q=80') center/cover;
+            overflow: hidden;
+        }
+
+        .press-ticker {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .press-ticker span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 4rem;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1920&q=80') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact h2 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            margin-bottom: 2rem;
+        }
+
+        .contact-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .contact-cta {
+            margin-bottom: 3rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .hero, .about, .cases, .awards, .press, .contact {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .case-item {
+                grid-template-columns: 1fr;
+            }
+
+            .case-item:nth-child(even) {
+                direction: ltr;
+            }
+
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .award-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1.5rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .award-row > div {
+                border: none;
+                padding: 0;
+            }
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--text-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+
+        @media (pointer: coarse) {
+            .cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">DAVINCI PORTFOLIO</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="arrow-down"></div>
+        <div class="starburst"></div>
+        <div class="hero-content">
+            <span class="hero-label">Creative</span>
+            <h1 class="hero-title">Designer<br>Developer</h1>
+            <p class="hero-subtitle">
+                I am a developer and UX/UI designer based in Italy. I have many years of experience in consulting in all areas of digital. I love minimal and brutalist design. I love nature, pizza and art.
+            </p>
+            <a href="#contact" class="contact-btn">Contact Me</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>Hello. I am DAVINCI</h2>
+                <p>
+                    I use my passion and skills to create digital products and experiences. National and international customers rely on me for design, implementation, and management of their digital products. As an independent, I work also with web agencies, companies, startups and individuals to create a blueprint for the digital business. Advisor and partner of some digital and fintech startups. Also, judge at CSSDA and the Webby.
+                </p>
+            </div>
+            <div class="about-image">
+                <div class="sculpture"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Cases -->
+    <section class="cases" id="work">
+        <div class="cases-header">
+            <div class="star-small"></div>
+            <span class="cases-label">Selected Cases</span>
+        </div>
+        
+        <div class="cases-grid">
+            <div class="case-item">
+                <div class="case-image">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Miranda Biondi">
+                </div>
+                <div>
+                    <h3 class="case-title">Miranda Biondi</h3>
+                    <p class="case-category">Photography</p>
+                </div>
+            </div>
+
+            <div class="case-item">
+                <div class="case-image">
+                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80" alt="Eugenia Durante">
+                </div>
+                <div>
+                    <h3 class="case-title">Eugenia Durante</h3>
+                    <p class="case-category">Fashion</p>
+                </div>
+            </div>
+
+            <div class="case-item">
+                <div class="case-image">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="Target HR">
+                </div>
+                <div>
+                    <h3 class="case-title">Target HR</h3>
+                    <p class="case-category">Corporate</p>
+                </div>
+            </div>
+
+            <div class="case-item">
+                <div class="case-image">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="House4Ground">
+                </div>
+                <div>
+                    <h3 class="case-title">House4Ground</h3>
+                    <p class="case-category">Architecture</p>
+                </div>
+            </div>
+
+            <div class="case-item">
+                <div class="case-image">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Viceversa">
+                </div>
+                <div>
+                    <h3 class="case-title">Viceversa</h3>
+                    <p class="case-category">Editorial</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cases-footer">
+            <div class="cases-nav">
+                <a href="#contact">Contact Me</a>
+                <a href="#">See Other Cases</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section class="awards">
+        <div class="awards-header">
+            <h2>I am honoured to work with special people</h2>
+        </div>
+        
+        <div class="awards-grid">
+            <div class="award-row">
+                <div class="award-title">Awwwards Site of the Day</div>
+                <div class="award-platform">CSS Design Awards</div>
+                <div class="award-project">Miranda Biondi</div>
+            </div>
+            <div class="award-row">
+                <div class="award-title">Website of the Day</div>
+                <div class="award-platform">CSS Design Awards</div>
+                <div class="award-project">Eugenia Durante</div>
+            </div>
+            <div class="award-row">
+                <div class="award-title">Honorable Mention</div>
+                <div class="award-platform">Awwwards</div>
+                <div class="award-project">Target HR</div>
+            </div>
+            <div class="award-row">
+                <div class="award-title">Honorable Mention</div>
+                <div class="award-platform">Awwwards</div>
+                <div class="award-project">House4Ground</div>
+            </div>
+        </div>
+
+        <div class="awards-footer">
+            <a href="#" class="view-more">View More →</a>
+        </div>
+    </section>
+
+    <!-- Press Section -->
+    <section class="press">
+        <div class="press-ticker">
+            <span>JT.COM</span>
+            <span>•</span>
+            <span>CREATIVEBLOQ.COM</span>
+            <span>•</span>
+            <span>PROTOTYPR.IO</span>
+            <span>•</span>
+            <span>DESIGNSHACK.NET</span>
+            <span>•</span>
+            <span>MINDSPARKLE MAG</span>
+            <span>•</span>
+            <span>THEGALLERY</span>
+            <span>•</span>
+            <span>MUZLI</span>
+            <span>•</span>
+            <span>MOCKUPPLUS.COM</span>
+            <span>•</span>
+            <span>JT.COM</span>
+            <span>•</span>
+            <span>CREATIVEBLOQ.COM</span>
+            <span>•</span>
+            <span>PROTOTYPR.IO</span>
+            <span>•</span>
+            <span>DESIGNSHACK.NET</span>
+            <span>•</span>
+            <span>MINDSPARKLE MAG</span>
+            <span>•</span>
+            <span>THEGALLERY</span>
+            <span>•</span>
+            <span>MUZLI</span>
+            <span>•</span>
+            <span>MOCKUPPLUS.COM</span>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Let's<br>Connect</h2>
+        
+        <div class="contact-tags">
+            <span class="tag">I'm always interested about</span>
+            <span class="tag">UX/UI Design</span>
+            <span class="tag">Frontend Development</span>
+            <span class="tag">Webflow Development</span>
+            <span class="tag">Digital Consultant</span>
+            <span class="tag">Wordpress Development</span>
+            <span class="tag">New Businesses</span>
+            <span class="tag">Startups</span>
+            <span class="tag">Pizza</span>
+        </div>
+
+        <div class="contact-cta">
+            <p style="margin-bottom: 1rem; color: var(--text-secondary);">Are you minding a project?</p>
+            <a href="mailto:hello@david.com" class="contact-btn">Contact Me</a>
+        </div>
+
+        <div class="social-links">
+            <a href="#">Dribbble</a>
+            <a href="#">Behance</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
+    </section>
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+
+        // Hover effects for cursor
+        const hoverElements = document.querySelectorAll('a, .case-item');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                cursor.style.borderColor = 'transparent';
+                cursor.style.background = 'rgba(255,255,255,0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = 'var(--text-primary)';
+                cursor.style.background = 'transparent';
+            });
+        });
+
+        // Smooth reveal on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.case-item, .award-row').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
