@@ -1,0 +1,43 @@
+# BurgerBlaze Backend — Implementation Plan
+
+A Node.js/Express REST API with a SQLite database to power the BurgerBlaze ordering site.
+
+## Proposed Changes
+
+### Backend (new files in `c:\Users\user\brian web\`)
+
+#### [NEW] package.json
+npm project config with dependencies: `express`, `better-sqlite3`, `cors`.
+
+#### [NEW] server.js
+Express app entry point. Mounts `/api/menu` and `/api/orders` routers, enables CORS so the HTML file can call the API. Serves `index.html` as static content.
+
+#### [NEW] db.js
+Creates/opens `burgerblaze.db` (SQLite), seeds the `menu_items` table with all 15 current items (KSh prices), and creates the `orders` / `order_items` tables.
+
+#### [NEW] routes/menu.js
+- `GET /api/menu` — returns all menu items (optionally filter by `?category=burgers`)
+
+#### [NEW] routes/orders.js
+- `POST /api/orders` — accepts `{ name, phone, address, payment, items: [{id, quantity}] }`, saves the order + line items to DB, returns the saved order with generated ID & timestamp.
+- `GET /api/orders/:id` — returns a single order with its items.
+
+---
+
+### Frontend
+
+#### [MODIFY] index.html
+- Replace the hardcoded `menuItems` JS array with a `fetch('/api/menu')` call on page load.
+- Replace the `placeOrder()` logic with a `fetch('/api/orders', { method:'POST', ... })` call that sends cart + customer details to the backend.
+
+---
+
+## Verification Plan
+
+### Automated (manual curl / browser)
+
+1. **Start server:** `node server.js` (from `c:\Users\user\brian web\`)
+2. **Menu API:** open `http://localhost:3000/api/menu` in browser → should return JSON array of 15 items.
+3. **Filter by category:** `http://localhost:3000/api/menu?category=drinks` → 4 items.
+4. **Place order via browser UI:** fill name, phone, address → click Place Order → success overlay appears.
+5. **Orders API:** `http://localhost:3000/api/orders/1` → returns the saved order details in JSON.
